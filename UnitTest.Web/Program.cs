@@ -1,6 +1,9 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=RootPass1234;database=unittestdb",
+// Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.30-mysql"));
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
