@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using UnitTest.Web.Models;
+using UnitTest.Web.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddDbContext<unittestdbContext>(options =>
 {
-    options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnection"), Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.30-mysql"));
+    options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnection"), ServerVersion.Parse("8.0.30-mysql"));
 });
 
 builder.Services.AddControllersWithViews();
