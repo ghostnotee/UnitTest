@@ -24,7 +24,7 @@ public class ProductsController : Controller
     {
         if (id == null || _productsRepository == null)
         {
-            return NotFound();
+            return RedirectToAction("Index");
         }
 
         var product = await _productsRepository.GetByIdAsync((int)id);
@@ -62,7 +62,7 @@ public class ProductsController : Controller
     {
         if (id == null || _productsRepository == null)
         {
-            return NotFound();
+            return RedirectToAction("Index");
         }
 
         var product = await _productsRepository.GetByIdAsync((int)id);
@@ -113,13 +113,13 @@ public class ProductsController : Controller
     // POST: Products/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public IActionResult DeleteConfirmed(int id)
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
         if (_productsRepository == null)
         {
             return Problem("Entity set 'unittestdbContext.Products'  is null.");
         }
-        var product = _productsRepository.GetByIdAsync(id).Result;
+        var product = await _productsRepository.GetByIdAsync(id);
         if (product != null)
         {
             _productsRepository.Delete(product);
@@ -129,7 +129,7 @@ public class ProductsController : Controller
 
     private bool ProductExists(int id)
     {
-        var dbProduct = _productsRepository.GetByIdAsync(id);
+        var dbProduct = _productsRepository.GetByIdAsync(id).Result;
         return dbProduct is not null ? true : false;
     }
 }
